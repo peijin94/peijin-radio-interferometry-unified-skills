@@ -47,3 +47,11 @@ Stokes codes 9–12 are linear; beam scalar corrections can't flip V sign.
 ## Examples
 
 Copy-paste commands: [EXAMPLES.md](EXAMPLES.md). Reusable drivers: [scripts/](scripts/).
+
+## Notes (deeper dives)
+
+- [notes/envs.md](notes/envs.md) — machines and environments.
+- [notes/calibration.md](notes/calibration.md) — general calibration notes.
+- [notes/squint.md](notes/squint.md) — beam-squint bipolar diagnosis and calibration plan.
+- [notes/primarybeam.md](notes/primarybeam.md) — beam models and correct use.
+- [notes/bufferdump.md](notes/bufferdump.md) — triggered fast-dump MS handling.
