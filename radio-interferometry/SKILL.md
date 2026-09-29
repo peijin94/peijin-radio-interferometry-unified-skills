@@ -51,7 +51,11 @@ Copy-paste commands: [EXAMPLES.md](EXAMPLES.md). Reusable drivers: [scripts/](sc
 ## Notes (deeper dives)
 
 - [notes/envs.md](notes/envs.md) — machines and environments.
+- [notes/container.md](notes/container.md) — container testing on machines
+  without the software environment (podman/docker, quoting gotcha, smoke tests).
 - [notes/calibration.md](notes/calibration.md) — general calibration notes.
 - [notes/squint.md](notes/squint.md) — beam-squint bipolar diagnosis and calibration plan.
 - [notes/primarybeam.md](notes/primarybeam.md) — beam models and correct use.
 - [notes/bufferdump.md](notes/bufferdump.md) — triggered fast-dump MS handling.
+- [notes/polarization.md](notes/polarization.md) — V conventions, solve rules,
+  RR/LL, V magnitude-gap decomposition.

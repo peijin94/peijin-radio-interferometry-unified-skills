@@ -50,3 +50,10 @@ and varies with frequency. On-axis (phase center) it is ~zero.
   Sun model (peel/subtract burst); fix the former only via direction-dependent work.
 - V magnitude gaps (2–3×) are dominated by X/Y amp, beam-pol, and clean — not squint
   (few-% effect). Don't chase squint for flux scale; chase it for sidelobe/background.
+- U→V (X–Y phase) is unmeasurable from broken Q/U images: joint-clean Q/U
+  overfit to checkerboards, so no X–Y phase can be inferred from them. Use a
+  visibility D-term solve or an independently good U map instead.
+- D-apply null, quantified: flagging 50 SNR-0 antennas and applying D-terms made
+  V background worse (std 0.056→0.083, flagging loss + noisy D) while Cas A/Cyg A
+  V/I stayed 4.7→4.8% / 3.8→3.6% (morphology pixel-identical). Few-% D-terms do
+  not drive V; do not apply them operationally at this cost.
