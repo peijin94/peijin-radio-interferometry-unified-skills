@@ -54,18 +54,33 @@ container run --rm --platform linux/amd64 --rosetta -m 6g \
   -v /tmp/ctest:/work docker.io/peijin/lwasolarproc:linc 'DP3 /work/run.parset'
 ```
 
-## Known defect: casacore is unusable under the image's numpy
+## Known defect: python-casacore is too old for the image's numpy
 
-The image ships numpy 2.4.6 but casacore is compiled against numpy 1.x, so every
-`casacore.tables.table()` call fails:
+Two different casacore things live in the image — do not conflate them:
+
+- **C++ casacore 3.8.0** (`/usr/local/include/casacore/casa/version.h`;
+  `libcasa_*.so.9` in `/usr/local/lib`). Used by DP3 and WSClean. Fine.
+- **python-casacore 3.5.3.dev36+g6bb837f7d** — the python bindings, and the
+  broken one. It predates numpy 2.
+
+The image ships numpy 2.4.6, so `import casacore.tables` succeeds but the first
+array access fails — the numpy C API is loaded lazily:
 
     RuntimeError: PycArray: failed to load the numpy API
 
 The inspection snippets in `EXAMPLES.md` therefore do **not** run out of the box.
-`pip install "numpy<2"` restores casacore, but `zarr` then breaks (it requires
-numpy>=2), so no in-image combination satisfies both. DP3 and WSClean are
-unaffected — they are native binaries and do not go through casacore's python
-bindings. Real fix is to pin numpy in `container/Dockerfile`.
+
+Fix by upgrading the bindings, not by downgrading numpy:
+
+```bash
+pip install -U python-casacore     # 3.5.3.dev36 -> 3.8.1
+```
+
+Verified: after the upgrade numpy stays 2.4.6 and reading the MS works
+(62,128 rows, `DATA` shape (rows, 192, 4) complex64, finite frac 1.0,
+192 chan 50.148–54.718 MHz). `pip install "numpy<2"` also works but breaks
+`zarr`, which requires numpy>=2 — so upgrade the bindings instead.
+Proper fix: bump python-casacore in `container/Dockerfile`.
 
 ## Smoke test (new machine)
 
