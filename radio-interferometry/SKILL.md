@@ -54,6 +54,9 @@ Copy-paste commands: [EXAMPLES.md](EXAMPLES.md). Reusable drivers: [scripts/](sc
 - [notes/container.md](notes/container.md) — container testing on machines
   without the software environment (podman/docker, quoting gotcha, smoke tests).
 - [notes/calibration.md](notes/calibration.md) — general calibration notes.
+- [notes/central-calibration.md](notes/central-calibration.md) — the OVRO-LWA
+  *centralized* production calibration pipeline on calim2 (hourly slow-data
+  runs: steps, sky model, paths, how to inspect runs, ops gotchas).
 - [notes/squint.md](notes/squint.md) — beam-squint bipolar diagnosis and calibration plan.
 - [notes/primarybeam.md](notes/primarybeam.md) — beam models and correct use.
 - [notes/bufferdump.md](notes/bufferdump.md) — triggered fast-dump MS handling.

@@ -54,3 +54,24 @@
   to merge, else downstream tools complain about multiple fields.
 - `casatasks.tclean` on snapshot LWA MS can return empty images without clear errors;
   prefer validated WSClean paths once established.
+
+## Centralized pipeline (calim2) — ops
+
+- **Output dirs are keyed by LST hour**, not UTC: `<UTC date>/<floor(LST)>h/`
+  (07:02 UT → `21h`; daily UTC h10/h11 runs → `02h`/`03h` in late Sept). Look for
+  the confusion when locating results.
+- Full-sky WSClean keeps dying with `std::bad_alloc` under memory pressure (even
+  with `-mem` caps; 41–64 MHz and 64–82 MHz both on 2026-09-30) — the run still
+  reports **SUCCESS**, so check the log for failed bands before trusting the
+  3-colour/full-sky products.
+- The production watcher is a **bare bash process** (no cron/systemd): after a
+  reboot/session end it stays dead until restarted; `pgrep -af watch_calib_auto.sh`
+  first when runs stop appearing.
+- Take `calibration_<date>_<LST>.B.flagged` (refined table) downstream, never the
+  raw `.B`; the daily solve derives fresh bandpass solutions — the
+  `reference/bandpass/` dir is legacy and only the *delay* reference is loaded.
+- Fully-flagged SPWs are auto-excluded from imaging (SPW 0 / 13 MHz commonly is);
+  its absence from products is normal, not a failure.
+- Latent bug: the single-integration fallback path reads
+  `config.INTEGRATION_DURATION_SEC`, which `pipeline_config.py` does not define —
+  harmless for the standard 6-integration runs, fatal for 1-integration inputs.
